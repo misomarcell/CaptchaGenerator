@@ -85,7 +85,6 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <None Include="Resources\Groovy.ttf" />
     <None Include="Resources\Katanf.ttf" />
   </ItemGroup>
   <ItemGroup>
