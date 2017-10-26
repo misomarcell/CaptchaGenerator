@@ -24,9 +24,13 @@ namespace StringToImage
         {
             var Captcha = new Captcha(textBox1.Text);
             Captcha.GenerateCaptcha(diff);
-            Captcha.Save();
 
-            Process.Start(@"C:\Users\Misó Marcell\Desktop\teszt.png");
+            saveFileDialog1.ShowDialog();
+            String filename = saveFileDialog1.FileName;
+            if ( !String.IsNullOrEmpty(filename) )
+                Captcha.Save(filename);
+
+            Process.Start(filename);
         }
 
         private void trackBar1_Scroll(object sender, EventArgs e)
@@ -46,6 +50,13 @@ namespace StringToImage
             }
 
             textBox2.Text = diff.ToString();
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            var Captcha = new Captcha(textBox1.Text);
+            pictureBox1.Image = Captcha.GenerateCaptcha(diff);
+
         }
     }
     }

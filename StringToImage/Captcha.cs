@@ -1,8 +1,11 @@
 ﻿using LibNoise;
+using StringToImage.Properties;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Drawing.Text;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -14,17 +17,18 @@ namespace StringToImage
         public Graphics MyGraphics { get; set; }
         public String MyText { get; set; }
 
-        private Random random;
-        private Font DEFAULT_FONT;
+        private PrivateFontCollection pfc;
+        private Random random;   
 
         public Captcha(String text)
         {
             MyImage = new Bitmap(1,1);
             MyGraphics = Graphics.FromImage(MyImage);
             MyText = text;
-            random = new Random();
+            random = new Random(DateTime.Now.Millisecond);
 
-            DEFAULT_FONT = new Font(new FontFamily("Courier New"), 46f, FontStyle.Bold);
+            pfc = new PrivateFontCollection();
+            AddCustomFont(pfc);
         }
 
         public Image GenerateCaptcha(Difficulties diff)
@@ -47,18 +51,18 @@ namespace StringToImage
                 case Difficulties.Hard:
                     AddRandomLines();
                     AddRandomOvals();
-                    GenerateText(MyText, GetRandomFont());
+                    GenerateText(MyText);
                     break;
                 case Difficulties.Unsolvable:
                     AddRandomBackground(MyGraphics, MyImage);
                     AddRandomLines();
                     AddRandomOvals();
-                    GenerateText(MyText, GetRandomFont());
+                    GenerateText(MyText);
                     AddRandomBackground(MyGraphics, MyImage);
                     //AddRandomForeground();
                     break;
-            }      
-
+            }    
+            
             return MyImage;
         }
 
@@ -92,25 +96,24 @@ namespace StringToImage
             return (int)(newStart + ((value - originalStart) * scale));
         }
 
-        private void GenerateText(String text, Font font = null)
+        private void GenerateText(String text)
         {
-            if ( font == null )
-                font = DEFAULT_FONT;
+            Font font = new Font(pfc.Families[0], 46f, FontStyle.Bold);
 
             Image Letter = new Bitmap(1,1);
             Graphics LetterGraph = Graphics.FromImage(Letter);
 
-            int lastLetterLeft = 0;
+            int lastLetterLeft = -50;
             for ( var i = 0; i < text.Length; i++)
             {
 
                 //Create new letter graphics
                 var LetterSize = LetterGraph.MeasureString(text[i].ToString(), font);
-                Letter = new Bitmap((int)LetterSize.Width + 20, (int)LetterSize.Height);
+                Letter = new Bitmap(200, 200);
                 LetterGraph = Graphics.FromImage(Letter);
 
                 // Rotate letter i
-                LetterGraph.TranslateTransform(10, 10);
+                LetterGraph.TranslateTransform(50,25);
                 LetterGraph.RotateTransform(random.Next(-30, 30));
 
                 //Draw letter i
@@ -119,14 +122,24 @@ namespace StringToImage
 
                 //Add new letter to the original image
                 MyGraphics.DrawImage( Letter, new Point(lastLetterLeft, random.Next(-10,20)) );
-                lastLetterLeft += Letter.Width - 40;
+                lastLetterLeft += 36;
             }
         }
 
-        public void Save()
+        private void AddCustomFont(PrivateFontCollection pfc)
+        {
+            int fontLength = Resources.Katanf.Length;
+            byte[] fontdata = Resources.Katanf;
+
+            IntPtr data = Marshal.AllocCoTaskMem(fontLength);
+            Marshal.Copy(fontdata, 0, data, fontLength);
+            pfc.AddMemoryFont(data, fontLength);
+        }
+
+        public void Save(String filename)
         {
             MyGraphics.Save();
-            MyImage.Save(@"C:\Users\Misó Marcell\Desktop\teszt.png", System.Drawing.Imaging.ImageFormat.Png);
+            MyImage.Save(filename, System.Drawing.Imaging.ImageFormat.Png);
         }
 
         private void AddRandomOvals()
@@ -160,23 +173,6 @@ namespace StringToImage
         private Color GetRandomColor()
         {
             return Color.FromArgb(random.Next(150), random.Next(150), random.Next(150));
-        }
-
-        private Font GetRandomFont()
-        {
-            Font[] font = new Font[]
-            {
-                new Font(new FontFamily("Courier New"), 46f, FontStyle.Bold),
-                new Font(new FontFamily("Times New Roman"), 46f, FontStyle.Regular),
-                new Font(new FontFamily("Verdana"), 46f, FontStyle.Bold),
-                new Font(new FontFamily("Courier New"), 46f, FontStyle.Strikeout),
-                new Font(new FontFamily("Times New Roman"), 46f, FontStyle.Strikeout),
-                new Font(new FontFamily("Verdana"), 46f, FontStyle.Strikeout)
-            };
-
-
-
-            return font[random.Next(0, font.Length)];
         }
     }
 }
