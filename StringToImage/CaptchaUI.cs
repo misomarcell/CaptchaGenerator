@@ -19,8 +19,8 @@ namespace StringToImage
         {
             try
             {
-                Captcha = new Captcha(textBox1.Text);
-                pictureCaptcha.Image = Captcha.GenerateCaptcha(diff);
+                Captcha = new Captcha(textBox1.Text, diff);
+                pictureCaptcha.Image = Captcha.GenerateCaptcha();
             }
             catch (Exception ex)
             {

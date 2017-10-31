@@ -15,17 +15,19 @@ namespace StringToImage
         public Image MyImage { get; set; }
         public Graphics MyGraphics { get; set; }
         public String MyText { get; set; }
+        public Difficulties Difficulty { get; set; }
 
         private PrivateFontCollection pfc;
         private Random random;   
 
-        public Captcha(String text)
+        public Captcha(String text, Difficulties difficulty)
         {
             if (String.IsNullOrEmpty(text))
                 throw new ArgumentNullException("text", "Captcha text can't be empty.");
 
             MyImage = new Bitmap(1,1);
             MyGraphics = Graphics.FromImage(MyImage);
+            Difficulty = difficulty;
 
             random = new Random(DateTime.Now.Millisecond);
 
@@ -35,7 +37,7 @@ namespace StringToImage
             MyText = text;
         }
 
-        public Image GenerateCaptcha(Difficulties diff)
+        public Image GenerateCaptcha()
         {
             MyImage = new Bitmap(MyText.Length * 37, 100);
             MyGraphics = Graphics.FromImage(MyImage);  
@@ -43,7 +45,7 @@ namespace StringToImage
             MyGraphics.Clear(Color.White);
             MyGraphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
 
-            switch (diff)
+            switch (Difficulty)
             {
                 case Difficulties.Easy:
                     GenerateText(MyText);
