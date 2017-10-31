@@ -1,5 +1,4 @@
-﻿using LibNoise;
-using StringToImage.Properties;
+﻿using StringToImage.Properties;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -22,13 +21,18 @@ namespace StringToImage
 
         public Captcha(String text)
         {
+            if (String.IsNullOrEmpty(text))
+                throw new ArgumentNullException("text", "Captcha text can't be empty.");
+
             MyImage = new Bitmap(1,1);
             MyGraphics = Graphics.FromImage(MyImage);
-            MyText = text;
+
             random = new Random(DateTime.Now.Millisecond);
 
             pfc = new PrivateFontCollection();
             AddCustomFont(pfc);
+
+            MyText = text;
         }
 
         public Image GenerateCaptcha(Difficulties diff)
@@ -138,6 +142,9 @@ namespace StringToImage
 
         public void Save(String filename)
         {
+            if (MyImage == null)
+               throw new NullReferenceException("No file to save.");
+
             MyGraphics.Save();
             MyImage.Save(filename, System.Drawing.Imaging.ImageFormat.Png);
         }
