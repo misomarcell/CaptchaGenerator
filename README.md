@@ -5,11 +5,25 @@ Simply make an instance of the Captcha class with its text and difficulty.
 
 # Difficulties
 - Easy
-Text only
+[x] Text
+[ ] Lines
+[ ] Ovals
+[ ] Random background
 - Normal
-Lines
+[x] Text
+[x] Lines
+[ ] Ovals
+[ ] Random background
 - Hard
-Ovals and lines
+[x] Text
+[x] Lines
+[x] Ovals
+[ ] Random background
 - Unsolvable
-Uses perlin noise to generate random background
-`https://lotsacode.wordpress.com/2010/02/24/perlin-noise-in-c/`
+[x] Text
+[x] Lines
+[x] Ovals
+[x] Random background
+
+#PerlinNoise.cs
+https://lotsacode.wordpress.com/2010/02/24/perlin-noise-in-c/
