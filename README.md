@@ -1,7 +1,11 @@
 # CaptchaGenerator
 
 ## Usage
-Simply make an instance of the Captcha class with its text and difficulty.
+Simply make an instance of the Captcha class with its text and difficulty. Example:
+```
+var Captcha = new Captcha("Test Captcha", Difficulties.Hard);
+picturebox.Image = Captcha.GenerateCaptcha();
+```
 
 ## Difficulties
 - Easy
