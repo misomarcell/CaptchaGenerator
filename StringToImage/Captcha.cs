@@ -84,7 +84,7 @@ namespace StringToImage
         private void AddRandomBackground(Graphics myGraphics, Image myImage)
         {
 
-            PerlinNoise p1 = new PerlinNoise(MyRandom.Next(0, 1000));
+            //PerlinNoise p1 = new PerlinNoise(MyRandom.Next(0, 1000));
             Bitmap bm = new Bitmap(MyImage.Width, myImage.Height);
 
             for (var w = 0; w < bm.Width; w++)
