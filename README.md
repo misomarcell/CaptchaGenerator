@@ -1,4 +1,4 @@
-# CaptchaGenerator
+# CaptchaGenerator | Work in progress!
 
 ## Usage
 Simply make an instance of the Captcha class with its text and difficulty. Example:
