@@ -35,6 +35,9 @@
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.panel2 = new System.Windows.Forms.Panel();
             this.DifficultySelector = new System.Windows.Forms.ComboBox();
+            this.textBox2 = new System.Windows.Forms.TextBox();
+            this.button1 = new System.Windows.Forms.Button();
+            this.textBox3 = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.pictureCaptcha)).BeginInit();
             this.panel2.SuspendLayout();
             this.SuspendLayout();
@@ -51,7 +54,7 @@
             this.pictureCaptcha.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pictureCaptcha.Location = new System.Drawing.Point(200, 0);
             this.pictureCaptcha.Name = "pictureCaptcha";
-            this.pictureCaptcha.Size = new System.Drawing.Size(363, 93);
+            this.pictureCaptcha.Size = new System.Drawing.Size(363, 149);
             this.pictureCaptcha.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pictureCaptcha.TabIndex = 5;
             this.pictureCaptcha.TabStop = false;
@@ -85,6 +88,9 @@
             // 
             // panel2
             // 
+            this.panel2.Controls.Add(this.textBox3);
+            this.panel2.Controls.Add(this.button1);
+            this.panel2.Controls.Add(this.textBox2);
             this.panel2.Controls.Add(this.DifficultySelector);
             this.panel2.Controls.Add(this.textBox1);
             this.panel2.Controls.Add(this.buttonShow);
@@ -92,7 +98,7 @@
             this.panel2.Dock = System.Windows.Forms.DockStyle.Left;
             this.panel2.Location = new System.Drawing.Point(0, 0);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(200, 93);
+            this.panel2.Size = new System.Drawing.Size(200, 149);
             this.panel2.TabIndex = 7;
             // 
             // DifficultySelector
@@ -108,11 +114,38 @@
             this.DifficultySelector.Size = new System.Drawing.Size(191, 21);
             this.DifficultySelector.TabIndex = 13;
             // 
+            // textBox2
+            // 
+            this.textBox2.Location = new System.Drawing.Point(3, 93);
+            this.textBox2.Name = "textBox2";
+            this.textBox2.Size = new System.Drawing.Size(191, 20);
+            this.textBox2.TabIndex = 14;
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(102, 119);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(92, 22);
+            this.button1.TabIndex = 15;
+            this.button1.Text = "Test";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
+            // textBox3
+            // 
+            this.textBox3.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.textBox3.Location = new System.Drawing.Point(12, 124);
+            this.textBox3.Name = "textBox3";
+            this.textBox3.ReadOnly = true;
+            this.textBox3.Size = new System.Drawing.Size(84, 13);
+            this.textBox3.TabIndex = 16;
+            this.textBox3.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
             // CaptchaUI
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(563, 93);
+            this.ClientSize = new System.Drawing.Size(563, 149);
             this.Controls.Add(this.pictureCaptcha);
             this.Controls.Add(this.panel2);
             this.Name = "CaptchaUI";
@@ -133,6 +166,9 @@
         private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.ComboBox DifficultySelector;
+        private System.Windows.Forms.TextBox textBox3;
+        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.TextBox textBox2;
     }
 }
 

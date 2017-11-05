@@ -16,12 +16,14 @@ namespace StringToImage
 
         private void buttonShow_Click(object sender, EventArgs e)
         {
-            var Generator = new CaptchaGenerator(textBox1.Text);
-            Captcha = Generator.Generate((Difficulties)DifficultySelector.SelectedIndex);
-            pictureCaptcha.Image = Captcha.Image;
+            textBox2.Text = String.Empty;
+            textBox3.Text = String.Empty;
 
             try
             {
+                var Generator = new CaptchaGenerator(textBox1.Text);
+                Captcha = Generator.Generate((Difficulties)DifficultySelector.SelectedIndex);
+                pictureCaptcha.Image = Captcha.Image;
             }
             catch (Exception ex)
             {
@@ -48,6 +50,15 @@ namespace StringToImage
             }
         }
 
+        private void button1_Click(object sender, EventArgs e)
+        {
+            if (Captcha == null)
+                return;
 
+            if (textBox2.Text.ToUpper() == Captcha.Text)
+                textBox3.Text = "Correct.";
+            else
+                textBox3.Text = "Wrong.";
+        }
     }
 }
