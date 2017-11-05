@@ -68,6 +68,5 @@ namespace StringToImage
 
             labelDifficulty.Text = diff.ToString();
         }
-
     }
 }

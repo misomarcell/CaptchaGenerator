@@ -32,11 +32,11 @@
             this.panel1 = new System.Windows.Forms.Panel();
             this.pictureCaptcha = new System.Windows.Forms.PictureBox();
             this.panel2 = new System.Windows.Forms.Panel();
-            this.labelDifficulty = new System.Windows.Forms.TextBox();
-            this.trackBarDifficulty = new System.Windows.Forms.TrackBar();
             this.textBox1 = new System.Windows.Forms.TextBox();
-            this.buttonShow = new System.Windows.Forms.Button();
+            this.trackBarDifficulty = new System.Windows.Forms.TrackBar();
             this.buttonSave = new System.Windows.Forms.Button();
+            this.buttonShow = new System.Windows.Forms.Button();
+            this.labelDifficulty = new System.Windows.Forms.TextBox();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureCaptcha)).BeginInit();
             this.panel2.SuspendLayout();
@@ -82,6 +82,48 @@
             this.panel2.Size = new System.Drawing.Size(389, 87);
             this.panel2.TabIndex = 7;
             // 
+            // textBox1
+            // 
+            this.textBox1.Dock = System.Windows.Forms.DockStyle.Top;
+            this.textBox1.Location = new System.Drawing.Point(0, 0);
+            this.textBox1.Name = "textBox1";
+            this.textBox1.Size = new System.Drawing.Size(239, 20);
+            this.textBox1.TabIndex = 9;
+            // 
+            // trackBarDifficulty
+            // 
+            this.trackBarDifficulty.Dock = System.Windows.Forms.DockStyle.Top;
+            this.trackBarDifficulty.Location = new System.Drawing.Point(0, 20);
+            this.trackBarDifficulty.Maximum = 3;
+            this.trackBarDifficulty.Name = "trackBarDifficulty";
+            this.trackBarDifficulty.Size = new System.Drawing.Size(239, 45);
+            this.trackBarDifficulty.TabIndex = 10;
+            this.trackBarDifficulty.TickStyle = System.Windows.Forms.TickStyle.Both;
+            this.trackBarDifficulty.Value = 2;
+            this.trackBarDifficulty.Scroll += new System.EventHandler(this.trackBarDifficulty_Scroll);
+            // 
+            // buttonSave
+            // 
+            this.buttonSave.Dock = System.Windows.Forms.DockStyle.Right;
+            this.buttonSave.Location = new System.Drawing.Point(314, 0);
+            this.buttonSave.Name = "buttonSave";
+            this.buttonSave.Size = new System.Drawing.Size(75, 87);
+            this.buttonSave.TabIndex = 8;
+            this.buttonSave.Text = "Save";
+            this.buttonSave.UseVisualStyleBackColor = true;
+            this.buttonSave.Click += new System.EventHandler(this.buttonSave_Click);
+            // 
+            // buttonShow
+            // 
+            this.buttonShow.Dock = System.Windows.Forms.DockStyle.Right;
+            this.buttonShow.Location = new System.Drawing.Point(239, 0);
+            this.buttonShow.Name = "buttonShow";
+            this.buttonShow.Size = new System.Drawing.Size(75, 87);
+            this.buttonShow.TabIndex = 12;
+            this.buttonShow.Text = "Show";
+            this.buttonShow.UseVisualStyleBackColor = true;
+            this.buttonShow.Click += new System.EventHandler(this.buttonShow_Click);
+            // 
             // labelDifficulty
             // 
             this.labelDifficulty.BackColor = System.Drawing.SystemColors.Control;
@@ -96,56 +138,14 @@
             this.labelDifficulty.Text = "Hard";
             this.labelDifficulty.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
-            // trackBarDifficulty
-            // 
-            this.trackBarDifficulty.Dock = System.Windows.Forms.DockStyle.Top;
-            this.trackBarDifficulty.Location = new System.Drawing.Point(0, 20);
-            this.trackBarDifficulty.Maximum = 3;
-            this.trackBarDifficulty.Name = "trackBarDifficulty";
-            this.trackBarDifficulty.Size = new System.Drawing.Size(239, 45);
-            this.trackBarDifficulty.TabIndex = 10;
-            this.trackBarDifficulty.TickStyle = System.Windows.Forms.TickStyle.Both;
-            this.trackBarDifficulty.Value = 2;
-            this.trackBarDifficulty.Scroll += new System.EventHandler(this.trackBarDifficulty_Scroll);
-            // 
-            // textBox1
-            // 
-            this.textBox1.Dock = System.Windows.Forms.DockStyle.Top;
-            this.textBox1.Location = new System.Drawing.Point(0, 0);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(239, 20);
-            this.textBox1.TabIndex = 9;
-            // 
-            // buttonShow
-            // 
-            this.buttonShow.Dock = System.Windows.Forms.DockStyle.Right;
-            this.buttonShow.Location = new System.Drawing.Point(239, 0);
-            this.buttonShow.Name = "buttonShow";
-            this.buttonShow.Size = new System.Drawing.Size(75, 87);
-            this.buttonShow.TabIndex = 12;
-            this.buttonShow.Text = "Show";
-            this.buttonShow.UseVisualStyleBackColor = true;
-            this.buttonShow.Click += new System.EventHandler(this.buttonShow_Click);
-            // 
-            // buttonSave
-            // 
-            this.buttonSave.Dock = System.Windows.Forms.DockStyle.Right;
-            this.buttonSave.Location = new System.Drawing.Point(314, 0);
-            this.buttonSave.Name = "buttonSave";
-            this.buttonSave.Size = new System.Drawing.Size(75, 87);
-            this.buttonSave.TabIndex = 8;
-            this.buttonSave.Text = "Save";
-            this.buttonSave.UseVisualStyleBackColor = true;
-            this.buttonSave.Click += new System.EventHandler(this.buttonSave_Click);
-            // 
-            // CaptchaUI
+            // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(389, 189);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.panel1);
-            this.Name = "CaptchaUI";
+            this.Name = "Form1";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Captcha UI";
             this.panel1.ResumeLayout(false);
