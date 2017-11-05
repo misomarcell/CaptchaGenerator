@@ -14,32 +14,43 @@ namespace StringToImage
 
     class Captcha
     {
-        public Image MyImage { get; set; }
-        public Graphics MyGraphics { get; set; }
-        public String MyText { get; set; }
-        public Font MyFontFamily {get; set; }
-        public Difficulties MyDifficulty { get; set; }
-
+        private Image MyImage;
+        private Graphics MyGraphics;
+        private String MyText;
+        private Font MyFontFamily;
+        private Color MyColor;
+        private Difficulties MyDifficulty;
         private Random MyRandom;   
+        
+        /* Config */
+        public float LINE_THICKNESS = 7f;
+        public float OVAL_THICKNESS = 2f;
+        public String FONT_FAMILY_NAME = "Georgia";
+        public float FONT_SIZE = 38f;
+        public FontStyle FONT_STYLE = FontStyle.Bold;
+        public bool DEBUG_MODE = false;
 
-        public Captcha(String text, Difficulties difficulty)
+        public Captcha(String Text, Difficulties Difficulty)
         {
-            if (String.IsNullOrEmpty(text))
-                throw new ArgumentNullException("text", "Captcha text can't be empty.");
+            if ( String.IsNullOrEmpty(Text))
+                 throw new ArgumentNullException("text", "Captcha text can't be empty.");
+            if ( Text.Length > 50 )
+                throw new ArgumentException("Max text length: 50");
 
-            MyFontFamily =  new Font(AddCustomFont(new PrivateFontCollection()).Families[0], 46f, FontStyle.Bold);
+            MyFontFamily =  new Font(FONT_FAMILY_NAME, FONT_SIZE, FONT_STYLE);
             MyRandom =      new Random(DateTime.Now.Millisecond);
             MyImage =       new Bitmap(1,1);
             MyGraphics =    Graphics.FromImage(MyImage);
-            MyDifficulty =  difficulty;
-            MyText =        text;
+            MyDifficulty =  Difficulty;
+            MyText =        Text.ToUpper();
+            MyColor =       GetRandomColor();
+
         }
 
         public Image GenerateCaptcha()
         {
-            int width = (int)MyGraphics.MeasureString(MyText, MyFontFamily).Width;
-            int height = (int)MyGraphics.MeasureString(MyText, MyFontFamily).Height;
-            MyImage = new Bitmap(width, height);
+            SizeF size = MyGraphics.MeasureString(MyText, MyFontFamily);
+            MyImage = new Bitmap((int)(size.Width * 1.4), (int)size.Height);
             MyGraphics = Graphics.FromImage(MyImage);  
 
             MyGraphics.Clear(Color.White);
@@ -48,22 +59,22 @@ namespace StringToImage
             switch (MyDifficulty)
             {
                 case Difficulties.Easy:
-                    GenerateText(MyText);
+                    GenerateText();
                     break;
                 case Difficulties.Normal:
                     AddRandomLines();
-                    GenerateText(MyText);
+                    GenerateText();
                     break;
                 case Difficulties.Hard:
                     AddRandomLines();
                     AddRandomOvals();
-                    GenerateText(MyText);
+                    GenerateText();
                     break;
                 case Difficulties.Unsolvable:
                     AddRandomBackground(MyGraphics, MyImage);
                     AddRandomLines();
                     AddRandomOvals();
-                    GenerateText(MyText);
+                    GenerateText();
                     break;
             }    
             
@@ -87,7 +98,6 @@ namespace StringToImage
 
             MyGraphics.DrawImage(bm, 0, 0); 
         }
-
         private void GetPixelPerlinColor(Bitmap bitmap, float x, float y)
         {
             /*
@@ -100,50 +110,45 @@ namespace StringToImage
             myNoise.GradientPerturb(ref x, ref y);
             */
         }
-
         private static int ConvertRange(int originalStart, int originalEnd, int newStart, int newEnd, float value)
         {
             double scale = (double)(newEnd - newStart) / (originalEnd - originalStart);
             return (int)(newStart + ((value - originalStart) * scale));
         }
 
-        private void GenerateText(String text, bool debug = false)
+        private void GenerateText()
         {
 
             Image Letter = new Bitmap(1,1);
             Graphics LetterGraph = Graphics.FromImage(Letter);
 
-            int lastLetterLeft = 10;
-            for ( var i = 0; i < text.Length; i++)
+            int lastLetterLeft = 5;
+            for ( var i = 0; i < MyText.Length; i++)
             {
-
-
                 //Create new letter graphics
-                var LetterSize = LetterGraph.MeasureString(text[i].ToString(), MyFontFamily);
-                //  Set graphics bounds to the letter
-                Letter = new Bitmap((int)LetterSize.Width - 20, (int)LetterSize.Height - 30);
+                Size LetterSize = LetterGraph.MeasureString(MyText[i].ToString(), MyFontFamily).ToSize();
+                Letter = new Bitmap(LetterSize.Width, LetterSize.Height);
                 LetterGraph = Graphics.FromImage(Letter);
 
-
-
                 // Rotate letter i
-                //LetterGraph.TranslateTransform(10, 10);
-                //LetterGraph.RotateTransform(20, System.Drawing.Drawing2D.MatrixOrder.Append);
-
-
-
+                if (!DEBUG_MODE )
+                {
+                    LetterGraph.TranslateTransform((float)Letter.Width / 2, (float)Letter.Height / 2);
+                    LetterGraph.RotateTransform(MyRandom.Next( -90, 90 ));
+                    LetterGraph.TranslateTransform(-(float)Letter.Width / 2, -(float)Letter.Height / 2);
+                }
 
                 //Draw letter i
                 LetterGraph.TextRenderingHint = TextRenderingHint.AntiAlias;
-                LetterGraph.DrawString(text[i].ToString().ToUpper(), MyFontFamily, new SolidBrush(GetRandomColor()), -10 , -10);
+                LetterGraph.DrawString(MyText[i].ToString(), MyFontFamily, new SolidBrush(MyColor),  0, 0);
 
-                if (debug) {
+                if (DEBUG_MODE) {
                     LetterGraph.DrawRectangle( new Pen(Color.Red, 1), new Rectangle(0, 0, Letter.Width - 1, Letter.Height  - 1) );
                     LetterGraph.DrawRectangle(new Pen(Color.Red), Letter.Width / 2, Letter.Height / 2, 1, 1);
                 }
 
                 //Add new letter to the original image at random height
-                MyGraphics.DrawImage( Letter, new Point(lastLetterLeft, MyRandom.Next(-10,20)) );
+                MyGraphics.DrawImage( Letter, new Point(lastLetterLeft, MyRandom.Next(-10, 10)) );
                 lastLetterLeft += Letter.Width;
             }
         }
@@ -171,28 +176,30 @@ namespace StringToImage
 
         private void AddRandomOvals()
         {
-            for (var i = 0; i <MyImage.Width / 50; i++)
+            for (var i = 0; i < MyText.Length; i++)
             {
+                Point point = GetRandomPoint(-100);
+                Size size = new Size(MyRandom.Next(500), MyRandom.Next(500));
                 MyGraphics.DrawEllipse(
-                    new Pen(GetRandomColor(), 4f),
-                    new Rectangle(GetRandomPoint().X, GetRandomPoint().Y - MyImage.Height,
-                    MyRandom.Next(200, 600), MyRandom.Next(200, 600)));
+                    new Pen(MyColor, OVAL_THICKNESS),
+                    new Rectangle(point, size));
             }
         }
 
         private void AddRandomLines()
         {
-            for (var i = 0; i < MyImage.Width / 50; i++)
+            for (var i = 0; i < MyText.Length; i++)
             {
-                Point point = GetRandomPoint();
-                MyGraphics.DrawLine( new Pen(GetRandomColor(), 5f), point, new Point(point.X + (MyRandom.Next(-500,500)), point.Y + (MyRandom.Next(-500,500))) );
+                Point point1 = GetRandomPoint();
+                Point point2 = new Point(MyRandom.Next(point1.X - 100, point1.X + 100), MyRandom.Next(point1.Y - 100, point1.Y + 100));
+                MyGraphics.DrawLine( new Pen(MyColor, LINE_THICKNESS), point1, point2);
             }
         }
 
-        private Point GetRandomPoint()
+        private Point GetRandomPoint(int margin = 0)
         {
-            int randomX = MyRandom.Next(0, MyImage.Width);
-            int randomY = MyRandom.Next(-50, MyImage.Height + 50);
+            int randomX = MyRandom.Next(0, MyImage.Width) + margin;
+            int randomY = MyRandom.Next(0, MyImage.Height) + margin;
 
             return new Point(randomX, randomY);
         }
