@@ -31,10 +31,7 @@
             this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
             this.pictureCaptcha = new System.Windows.Forms.PictureBox();
             this.buttonSave = new System.Windows.Forms.Button();
-            this.buttonShow = new System.Windows.Forms.Button();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.panel2 = new System.Windows.Forms.Panel();
-            this.DifficultySelector = new System.Windows.Forms.ComboBox();
+            this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureCaptcha)).BeginInit();
             this.panel2.SuspendLayout();
             this.SuspendLayout();
@@ -58,13 +55,30 @@
             // 
             // buttonSave
             // 
-            this.buttonSave.Location = new System.Drawing.Point(3, 65);
-            this.buttonSave.Name = "buttonSave";
-            this.buttonSave.Size = new System.Drawing.Size(92, 22);
-            this.buttonSave.TabIndex = 8;
-            this.buttonSave.Text = "Save";
-            this.buttonSave.UseVisualStyleBackColor = true;
-            this.buttonSave.Click += new System.EventHandler(this.buttonSave_Click);
+            this.panel2.Controls.Add(this.labelDifficulty);
+            this.panel2.Controls.Add(this.trackBarDifficulty);
+            this.panel2.Controls.Add(this.textBox1);
+            this.panel2.Controls.Add(this.buttonShow);
+            this.panel2.Controls.Add(this.buttonSave);
+            this.panel2.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panel2.Location = new System.Drawing.Point(0, 100);
+            this.panel2.Name = "panel2";
+            this.panel2.Size = new System.Drawing.Size(389, 87);
+            this.panel2.TabIndex = 7;
+            // 
+            // labelDifficulty
+            // 
+            this.labelDifficulty.BackColor = System.Drawing.SystemColors.Control;
+            this.labelDifficulty.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.labelDifficulty.Dock = System.Windows.Forms.DockStyle.Top;
+            this.labelDifficulty.Location = new System.Drawing.Point(0, 65);
+            this.labelDifficulty.Margin = new System.Windows.Forms.Padding(10, 3, 10, 3);
+            this.labelDifficulty.Name = "labelDifficulty";
+            this.labelDifficulty.ReadOnly = true;
+            this.labelDifficulty.Size = new System.Drawing.Size(239, 13);
+            this.labelDifficulty.TabIndex = 11;
+            this.labelDifficulty.Text = "Hard";
+            this.labelDifficulty.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // buttonShow
             // 
@@ -76,11 +90,12 @@
             this.buttonShow.UseVisualStyleBackColor = true;
             this.buttonShow.Click += new System.EventHandler(this.buttonShow_Click);
             // 
-            // textBox1
+            // buttonSave
             // 
-            this.textBox1.Location = new System.Drawing.Point(3, 12);
+            this.textBox1.Dock = System.Windows.Forms.DockStyle.Top;
+            this.textBox1.Location = new System.Drawing.Point(0, 0);
             this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(191, 20);
+            this.textBox1.Size = new System.Drawing.Size(239, 20);
             this.textBox1.TabIndex = 9;
             // 
             // panel2
@@ -95,26 +110,25 @@
             this.panel2.Size = new System.Drawing.Size(200, 93);
             this.panel2.TabIndex = 7;
             // 
-            // DifficultySelector
+            // buttonSave
             // 
-            this.DifficultySelector.FormattingEnabled = true;
-            this.DifficultySelector.Items.AddRange(new object[] {
-            "Easy",
-            "Normal",
-            "Hard",
-            "Unreadable"});
-            this.DifficultySelector.Location = new System.Drawing.Point(3, 38);
-            this.DifficultySelector.Name = "DifficultySelector";
-            this.DifficultySelector.Size = new System.Drawing.Size(191, 21);
-            this.DifficultySelector.TabIndex = 13;
+            this.buttonSave.Dock = System.Windows.Forms.DockStyle.Right;
+            this.buttonSave.Location = new System.Drawing.Point(314, 0);
+            this.buttonSave.Name = "buttonSave";
+            this.buttonSave.Size = new System.Drawing.Size(75, 87);
+            this.buttonSave.TabIndex = 8;
+            this.buttonSave.Text = "Save";
+            this.buttonSave.UseVisualStyleBackColor = true;
+            this.buttonSave.Click += new System.EventHandler(this.buttonSave_Click);
             // 
-            // CaptchaUI
+            // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(563, 93);
             this.Controls.Add(this.pictureCaptcha);
             this.Controls.Add(this.panel2);
+            this.Controls.Add(this.panel1);
             this.Name = "CaptchaUI";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Captcha UI";
