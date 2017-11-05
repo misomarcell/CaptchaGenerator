@@ -7,19 +7,19 @@ namespace StringToImage
 {
     public partial class CaptchaUI : Form
     {
-        Difficulties diff = Difficulties.Hard;
         Captcha Captcha;
 
         public CaptchaUI()
         {
             InitializeComponent();
+            DifficultySelector.SelectedIndex = 2;
         }
 
         private void buttonShow_Click(object sender, EventArgs e)
         {
             try
             {
-                Captcha = new Captcha(textBox1.Text, diff);
+                Captcha = new Captcha(textBox1.Text, (Difficulties)DifficultySelector.SelectedIndex);
                 pictureCaptcha.Image = Captcha.GenerateCaptcha();
             }
             catch (Exception ex)
@@ -47,27 +47,6 @@ namespace StringToImage
             }
         }
 
-        private void trackBarDifficulty_Scroll(object sender, EventArgs e)
-        {
-            if (trackBarDifficulty.Value == 0)
-            {
-                diff = Difficulties.Easy;
-            }
-            else if (trackBarDifficulty.Value == 1)
-            {
-                diff = Difficulties.Normal;
-            }
-            else if (trackBarDifficulty.Value == 2)
-            {
-                diff = Difficulties.Hard;
-            }
-            else if (trackBarDifficulty.Value == 3)
-            {
-                diff = Difficulties.Unsolvable;
-            }
-
-            labelDifficulty.Text = diff.ToString();
-        }
 
     }
 }
