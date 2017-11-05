@@ -16,7 +16,7 @@ namespace StringToImage
     {
         private Image MyImage;
         private Graphics MyGraphics;
-        private String MyText;
+        private string MyText;
         private Font MyFontFamily;
         private Color MyColor;
         private Difficulties MyDifficulty;
@@ -32,19 +32,20 @@ namespace StringToImage
 
         public Captcha(String Text, Difficulties Difficulty)
         {
-            if ( String.IsNullOrEmpty(Text))
-                 throw new ArgumentNullException("text", "Captcha text can't be empty.");
-            if ( Text.Length > 50 )
-                throw new ArgumentException("Max text length: 50");
 
             MyFontFamily =  new Font(FONT_FAMILY_NAME, FONT_SIZE, FONT_STYLE);
             MyRandom =      new Random(DateTime.Now.Millisecond);
             MyImage =       new Bitmap(1,1);
             MyGraphics =    Graphics.FromImage(MyImage);
             MyDifficulty =  Difficulty;
-            MyText =        Text.ToUpper();
             MyColor =       GetRandomColor();
 
+            if (Text.Length > 50)
+                throw new ArgumentException("Max text length: 50");
+            if (String.IsNullOrEmpty(Text))
+                MyText = GetRandomText(5);
+            else
+                MyText = Text.ToUpper();
         }
 
         public Image GenerateCaptcha()
@@ -131,8 +132,7 @@ namespace StringToImage
 
                 //Create new letter graphics
                 var LetterSize = LetterGraph.MeasureString(text[i].ToString(), MyFontFamily);
-                //  Set graphics bounds to the letter
-                Letter = new Bitmap((int)LetterSize.Width - 20, (int)LetterSize.Height - 30);
+                Letter = new Bitmap((int)LetterSize.Width, (int)LetterSize.Height);
                 LetterGraph = Graphics.FromImage(Letter);
 
 
@@ -186,7 +186,7 @@ namespace StringToImage
             for (var i = 0; i <MyImage.Width / 50; i++)
             {
                 MyGraphics.DrawEllipse(
-                    new Pen(GetRandomColor(), 4f),
+                    new Pen(MyColor, 4f),
                     new Rectangle(GetRandomPoint().X, GetRandomPoint().Y - MyImage.Height,
                     MyRandom.Next(200, 600), MyRandom.Next(200, 600)));
             }
@@ -200,6 +200,17 @@ namespace StringToImage
                 Point point2 = new Point(MyRandom.Next(point1.X - 100, point1.X + 100), MyRandom.Next(point1.Y - 100, point1.Y + 100));
                 MyGraphics.DrawLine( new Pen(MyColor, LINE_THICKNESS), point1, point2);
             }
+        }
+
+        private string GetRandomText(int v)
+        {
+            string alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
+            StringBuilder result = new StringBuilder();
+            for ( var i = 0; i < v; i++ )
+            {
+                result.Append(alphabet[MyRandom.Next(0, alphabet.Length - 1)]);
+            }
+            return result.ToString();
         }
 
         private Point GetRandomPoint()

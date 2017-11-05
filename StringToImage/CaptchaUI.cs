@@ -17,10 +17,10 @@ namespace StringToImage
 
         private void buttonShow_Click(object sender, EventArgs e)
         {
-            try
-            {
                 Captcha = new Captcha(textBox1.Text, (Difficulties)DifficultySelector.SelectedIndex);
                 pictureCaptcha.Image = Captcha.GenerateCaptcha();
+            try
+            {
             }
             catch (Exception ex)
             {
