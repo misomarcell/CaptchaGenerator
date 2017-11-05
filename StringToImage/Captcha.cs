@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace StringToImage
 {
-    enum Difficulties { Easy, Normal, Hard, Unsolvable }
+    enum Difficulties { Easy = 0, Normal = 1, Hard = 2, Unsolvable = 3 }
 
     class Captcha
     {
