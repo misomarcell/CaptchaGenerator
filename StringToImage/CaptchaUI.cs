@@ -8,7 +8,6 @@ namespace StringToImage
     public partial class CaptchaUI : Form
     {
         Captcha Captcha;
-
         public CaptchaUI()
         {
             InitializeComponent();
@@ -17,8 +16,10 @@ namespace StringToImage
 
         private void buttonShow_Click(object sender, EventArgs e)
         {
-                Captcha = new Captcha(textBox1.Text, (Difficulties)DifficultySelector.SelectedIndex);
-                pictureCaptcha.Image = Captcha.GenerateCaptcha();
+            var Generator = new CaptchaGenerator(textBox1.Text);
+            Captcha = Generator.Generate((Difficulties)DifficultySelector.SelectedIndex);
+            pictureCaptcha.Image = Captcha.Image;
+
             try
             {
             }

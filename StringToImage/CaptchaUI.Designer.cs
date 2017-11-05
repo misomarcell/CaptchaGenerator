@@ -72,7 +72,7 @@
             this.buttonShow.Name = "buttonShow";
             this.buttonShow.Size = new System.Drawing.Size(92, 22);
             this.buttonShow.TabIndex = 12;
-            this.buttonShow.Text = "Show";
+            this.buttonShow.Text = "Generate";
             this.buttonShow.UseVisualStyleBackColor = true;
             this.buttonShow.Click += new System.EventHandler(this.buttonShow_Click);
             // 

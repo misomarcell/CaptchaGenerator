@@ -49,6 +49,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Captcha.cs" />
+    <Compile Include="CaptchaGenerator.cs" />
     <Compile Include="CaptchaUI.cs">
       <SubType>Form</SubType>
     </Compile>
