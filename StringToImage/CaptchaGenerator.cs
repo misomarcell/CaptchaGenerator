@@ -22,7 +22,7 @@ namespace StringToImage
         private Random _myRandom;
 
         /* Config */
-        public float LINE_THICKNESS = 7f;
+        public float LINE_THICKNESS = 4f;
         public float OVAL_THICKNESS = 2f;
         public String FONT_FAMILY_NAME = "Times New Roman";
         public float FONT_SIZE = 38f;
@@ -103,49 +103,69 @@ namespace StringToImage
 
         private void GenerateText(bool debug = false)
         {
-
-            Image Letter = new Bitmap(1, 1);
-            Graphics LetterGraph = Graphics.FromImage(Letter);
-
             int lastLetterLeft = 5;
-            for ( var i = 0; i < _myText.Length; i++)
+            List<Image> Letters = GetTextAsImageList(_myText);
+            for ( var i = 0; i < Letters.Count; i++)
             {
-                //Create new letter graphics
-                var LetterSize = LetterGraph.MeasureString(_myText[i].ToString(), _myFontFamily);
-                Letter = new Bitmap((int)LetterSize.Width, (int)LetterSize.Height);
-                LetterGraph = Graphics.FromImage(Letter);
+                Image Letter = Letters[i];
 
-                // Rotate letter i
-                if (!DEBUG_MODE )
-                {
-                    LetterGraph.TranslateTransform((float)Letter.Width / 2, (float)Letter.Height / 2);
-                    LetterGraph.RotateTransform(_myRandom.Next( -90, 90 ));
-                    LetterGraph.TranslateTransform(-(float)Letter.Width / 2, -(float)Letter.Height / 2);
-                }
+                if (!DEBUG_MODE)
+                    Letter = GetRotatedLetter(Letter, _myRandom.Next(-60, 60));
+                else
+                    Letter = GetDebugLetter(Letter);
 
-                //Draw letter i
-                LetterGraph.TextRenderingHint = TextRenderingHint.AntiAlias;
-                LetterGraph.DrawString(_myText[i].ToString(), _myFontFamily, new SolidBrush(_myColor),  0, 0);
-
-                if (DEBUG_MODE) {
-                    LetterGraph.DrawRectangle( new Pen(Color.Red, 1), new Rectangle(0, 0, Letter.Width - 1, Letter.Height  - 1) );
-                    LetterGraph.DrawRectangle(new Pen(Color.Red), Letter.Width / 2, Letter.Height / 2, 1, 1);
-                }
-
-                //Add new letter to the original image at random height
                 _myGraphics.DrawImage( Letter, new Point(lastLetterLeft, _myRandom.Next(-10, 10)) );
                 lastLetterLeft += Letter.Width;
             }
+        }
+
+        private List<Image> GetTextAsImageList(String text)
+        {
+            List<Image> Letters = new List<Image>();
+            for (var i = 0; i < _myText.Length; i++)
+            {
+                Size LetterSize = _myGraphics.MeasureString(text[i].ToString(), _myFontFamily).ToSize();
+                Image Letter = new Bitmap(LetterSize.Width, LetterSize.Height);
+                Graphics LetterGraph = Graphics.FromImage(Letter);
+
+                LetterGraph.TextRenderingHint = TextRenderingHint.AntiAlias;
+                LetterGraph.DrawString(text[i].ToString(), _myFontFamily, new SolidBrush(_myColor), 0, 0);
+                Letters.Add(Letter);
+            }
+            return Letters;
+        }
+
+        private Image GetRotatedLetter(Image image, int angle)
+        {
+            Image rotatedImage = new Bitmap(image.Width, image.Height);
+            Graphics graphics = Graphics.FromImage(rotatedImage);
+
+            graphics.TranslateTransform((float)image.Width / 2, (float)image.Height / 2);
+            graphics.RotateTransform(angle);
+            graphics.TranslateTransform(-(float)image.Width / 2, -(float)image.Height / 2);
+            graphics.DrawImage(image, 0, 0);
+
+            return rotatedImage;
+        }
+
+        private Image GetDebugLetter(Image image)
+        {
+            Image debugImage = new Bitmap(image);
+            Graphics graphics = Graphics.FromImage(debugImage);
+
+            graphics.DrawRectangle(new Pen(Color.Red, 1), new Rectangle(0, 0, image.Width - 1, image.Height - 1));
+            graphics.DrawRectangle(new Pen(Color.Red), image.Width / 2, image.Height / 2, 1, 1);
+
+            return debugImage;
         }
 
         private void AddRandomOvals(Graphics graphics)
         {
             for (var i = 0; i <_myImage.Width / 50; i++)
             {
-                graphics.DrawEllipse(
-                    new Pen(_myColor, 4f),
-                    new Rectangle(GetRandomPoint().X, GetRandomPoint().Y - _myImage.Height,
-                    _myRandom.Next(200, 600), _myRandom.Next(200, 600)));
+                Size size = new Size(_myRandom.Next(0, 400), _myRandom.Next(0, 400));
+                Point location = new Point(GetRandomPoint(-200).X, GetRandomPoint(-200).Y);
+                graphics.DrawEllipse( new Pen(_myColor, 4f), new Rectangle(location, size) );
             }
         }
 
@@ -170,10 +190,10 @@ namespace StringToImage
             return result.ToString();
         }
 
-        private Point GetRandomPoint()
+        private Point GetRandomPoint(int marginW = 0, int marginH = 0)
         {
-            int randomX = _myRandom.Next(0, _myImage.Width);
-            int randomY = _myRandom.Next(-50, _myImage.Height + 50);
+            int randomX = _myRandom.Next(marginW, _myImage.Width + marginW);
+            int randomY = _myRandom.Next(marginH, _myImage.Height + marginH);
 
             return new Point(randomX, randomY);
         }
