@@ -6,27 +6,9 @@ var Generator = new CaptchaGenerator();
 picturebox.Image = Generator.GenerateCaptcha(Difficulties.Hard).Image;
 ```
 
-## Difficulties
-- Easy
-  - [x] Text
-  - [ ] Lines
-  - [ ] Ovals
-  - [ ] Random background
-- Normal
-  - [x] Text
-  - [x] Lines
-  - [ ] Ovals
-  - [ ] Random background
-- Hard
-  - [x] Text
-  - [x] Lines
-  - [x] Ovals
-  - [ ] Random background
-- Unsolvable
-  - [x] Text
-  - [x] Lines
-  - [x] Ovals
-  - [x] Random background (perlin noise)
-
-### PerlinNoise.cs
-https://lotsacode.wordpress.com/2010/02/24/perlin-noise-in-c/
+## Preview
+#### This is how it looks currently
+![Easy Difficulty](https://i.imgur.com/D5mr4GS.png)
+![Normal Difficulty](https://i.imgur.com/T2aousd.png)
+![Hard Difficulty](https://i.imgur.com/dxkLsLf.png)
+![Unreadable Difficulty](https://i.imgur.com/WwTlEtw.png)
