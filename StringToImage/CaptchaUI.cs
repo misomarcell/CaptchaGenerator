@@ -11,19 +11,19 @@ namespace StringToImage
         public CaptchaUI()
         {
             InitializeComponent();
-            DifficultySelector.SelectedIndex = 2;
+            difficultySelector.SelectedIndex = 2;
         }
 
         private void buttonShow_Click(object sender, EventArgs e)
         {
-            textBox2.Text = String.Empty;
+            testInput.Text = String.Empty;
             textBox3.Text = String.Empty;
 
             try
             {
-                var Generator = new CaptchaGenerator(textBox1.Text);
-                Captcha = Generator.Generate((Difficulties)DifficultySelector.SelectedIndex);
-                pictureCaptcha.Image = Captcha.Image;
+                var Generator = new CaptchaGenerator(captchaInput.Text);
+                Captcha = Generator.Generate((Difficulties)difficultySelector.SelectedIndex);
+                pictureBox.Image = Captcha.Image;
             }
             catch (Exception ex)
             {
@@ -55,7 +55,7 @@ namespace StringToImage
             if (Captcha == null)
                 return;
 
-            if (textBox2.Text.ToUpper() == Captcha.Text.ToUpper())
+            if (testInput.Text.ToUpper() == Captcha.Text.ToUpper())
                 textBox3.Text = "Correct.";
             else
                 textBox3.Text = "Wrong.";

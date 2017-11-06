@@ -100,7 +100,7 @@ namespace StringToImage
             }
         }
 
-
+        #region Text
         private void GenerateText(bool debug = false)
         {
             int lastLetterLeft = 5;
@@ -159,6 +159,19 @@ namespace StringToImage
             return debugImage;
         }
 
+        private string GetRandomText(int v)
+        {
+            string alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ123456789";
+            StringBuilder result = new StringBuilder();
+            for (var i = 0; i < v; i++)
+            {
+                result.Append(alphabet[_myRandom.Next(0, alphabet.Length - 1)]);
+            }
+            return result.ToString();
+        }
+
+        #endregion
+
         private void AddRandomOvals(Graphics graphics)
         {
             for (var i = 0; i <_myImage.Width / 50; i++)
@@ -177,17 +190,6 @@ namespace StringToImage
                 Point point2 = new Point(_myRandom.Next(point1.X - 100, point1.X + 100), _myRandom.Next(point1.Y - 100, point1.Y + 100));
                 graphics.DrawLine( new Pen(_myColor, LINE_THICKNESS), point1, point2);
             }
-        }
-
-        private string GetRandomText(int v)
-        {
-            string alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ123456789";
-            StringBuilder result = new StringBuilder();
-            for ( var i = 0; i < v; i++ )
-            {
-                result.Append(alphabet[_myRandom.Next(0, alphabet.Length - 1)]);
-            }
-            return result.ToString();
         }
 
         private Point GetRandomPoint(int marginW = 0, int marginH = 0)
