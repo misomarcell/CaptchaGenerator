@@ -66,22 +66,22 @@ namespace StringToImage
             switch (Difficulty)
             {
                 case Difficulties.Easy:
-                    GenerateText(_myText);
+                    GenerateText();
                     break;
                 case Difficulties.Normal:
                     AddRandomLines(_myGraphics);
-                    GenerateText(_myText);
+                    GenerateText();
                     break;
                 case Difficulties.Hard:
                     AddRandomLines(_myGraphics);
                     AddRandomOvals(_myGraphics);
-                    GenerateText(_myText);
+                    GenerateText();
                     break;
                 case Difficulties.Unsolvable:
                     AddBackground(_myGraphics, _myImage);
                     AddRandomLines(_myGraphics);
                     AddRandomOvals(_myGraphics);
-                    GenerateText(_myText);
+                    GenerateText();
                     break;
             }
 
@@ -91,12 +91,17 @@ namespace StringToImage
 
         private void AddBackground(Graphics myGraphics, Image myImage)
         {
-
-
+            for ( var w = 0; w <= myImage.Width / 20; w++ )
+            {
+                for (var h = 0; h <= myImage.Width / 20; h++)
+                {
+                    myGraphics.FillEllipse(new SolidBrush(_myColor), w * 20, h * 20, 5, 5);
+                }
+            }
         }
 
 
-        private void GenerateText(String text, bool debug = false)
+        private void GenerateText(bool debug = false)
         {
 
             Image Letter = new Bitmap(1, 1);
@@ -106,7 +111,7 @@ namespace StringToImage
             for ( var i = 0; i < _myText.Length; i++)
             {
                 //Create new letter graphics
-                var LetterSize = LetterGraph.MeasureString(text[i].ToString(), _myFontFamily);
+                var LetterSize = LetterGraph.MeasureString(_myText[i].ToString(), _myFontFamily);
                 Letter = new Bitmap((int)LetterSize.Width, (int)LetterSize.Height);
                 LetterGraph = Graphics.FromImage(Letter);
 
