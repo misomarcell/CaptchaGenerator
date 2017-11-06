@@ -55,7 +55,7 @@ namespace StringToImage
             if (Captcha == null)
                 return;
 
-            if (textBox2.Text.ToUpper() == Captcha.Text)
+            if (textBox2.Text.ToUpper() == Captcha.Text.ToUpper())
                 textBox3.Text = "Correct.";
             else
                 textBox3.Text = "Wrong.";

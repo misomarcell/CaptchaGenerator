@@ -34,10 +34,10 @@
             this.buttonShow = new System.Windows.Forms.Button();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.panel2 = new System.Windows.Forms.Panel();
-            this.DifficultySelector = new System.Windows.Forms.ComboBox();
-            this.textBox2 = new System.Windows.Forms.TextBox();
-            this.button1 = new System.Windows.Forms.Button();
             this.textBox3 = new System.Windows.Forms.TextBox();
+            this.button1 = new System.Windows.Forms.Button();
+            this.textBox2 = new System.Windows.Forms.TextBox();
+            this.DifficultySelector = new System.Windows.Forms.ComboBox();
             ((System.ComponentModel.ISupportInitialize)(this.pictureCaptcha)).BeginInit();
             this.panel2.SuspendLayout();
             this.SuspendLayout();
@@ -101,25 +101,15 @@
             this.panel2.Size = new System.Drawing.Size(200, 149);
             this.panel2.TabIndex = 7;
             // 
-            // DifficultySelector
+            // textBox3
             // 
-            this.DifficultySelector.FormattingEnabled = true;
-            this.DifficultySelector.Items.AddRange(new object[] {
-            "Easy",
-            "Normal",
-            "Hard",
-            "Unreadable"});
-            this.DifficultySelector.Location = new System.Drawing.Point(3, 38);
-            this.DifficultySelector.Name = "DifficultySelector";
-            this.DifficultySelector.Size = new System.Drawing.Size(191, 21);
-            this.DifficultySelector.TabIndex = 13;
-            // 
-            // textBox2
-            // 
-            this.textBox2.Location = new System.Drawing.Point(3, 93);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(191, 20);
-            this.textBox2.TabIndex = 14;
+            this.textBox3.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.textBox3.Location = new System.Drawing.Point(12, 124);
+            this.textBox3.Name = "textBox3";
+            this.textBox3.ReadOnly = true;
+            this.textBox3.Size = new System.Drawing.Size(84, 13);
+            this.textBox3.TabIndex = 16;
+            this.textBox3.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // button1
             // 
@@ -131,15 +121,26 @@
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
-            // textBox3
+            // textBox2
             // 
-            this.textBox3.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.textBox3.Location = new System.Drawing.Point(12, 124);
-            this.textBox3.Name = "textBox3";
-            this.textBox3.ReadOnly = true;
-            this.textBox3.Size = new System.Drawing.Size(84, 13);
-            this.textBox3.TabIndex = 16;
-            this.textBox3.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.textBox2.Location = new System.Drawing.Point(3, 93);
+            this.textBox2.Name = "textBox2";
+            this.textBox2.Size = new System.Drawing.Size(191, 20);
+            this.textBox2.TabIndex = 14;
+            // 
+            // DifficultySelector
+            // 
+            this.DifficultySelector.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.DifficultySelector.FormattingEnabled = true;
+            this.DifficultySelector.Items.AddRange(new object[] {
+            "Easy",
+            "Normal",
+            "Hard",
+            "Unreadable"});
+            this.DifficultySelector.Location = new System.Drawing.Point(3, 38);
+            this.DifficultySelector.Name = "DifficultySelector";
+            this.DifficultySelector.Size = new System.Drawing.Size(191, 21);
+            this.DifficultySelector.TabIndex = 13;
             // 
             // CaptchaUI
             // 
