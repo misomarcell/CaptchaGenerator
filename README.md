@@ -1,4 +1,4 @@
-# CaptchaGenerator | Work in progress
+# CaptchaGenerator
 
 ## Usage
 ```
